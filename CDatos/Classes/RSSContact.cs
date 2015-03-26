@@ -63,6 +63,66 @@ namespace CDatos.Classes
         #endregion
 
         #region "CRUD from database"
+        public int saveItem(RSSContact rsstosave)
+        {
+            string sqlsentence =
+                "INSERT INTO RssDirections " +
+                "(Id,Active,SaveDate,Direction,Comment,Type,Title) " +
+                "VALUES (" +
+                rsstosave.id + ",'" +
+                rsstosave.active + "','" +
+                rsstosave.savedate.ToShortDateString() + "','" +
+                rsstosave.url + "','" +
+                rsstosave.comment + "','" +
+                rsstosave.type + "','" +
+                rsstosave.title + "')";
+            Console.WriteLine(sqlsentence);
+
+            return 0;
+        }
+
+        public int updateItem(RSSContact rsstoupdate)
+        {
+            string sqlsentence =
+                "UPDATE RssDirections " +
+                "SET Active = '" + rsstoupdate.active + "', " +
+                "SaveDate = '" + rsstoupdate.savedate.ToShortDateString() + "', " +
+                "Direction = '" + rsstoupdate.url + "', " +
+                "Comment = '" + rsstoupdate.comment + "' " +
+                "Type = '" + rsstoupdate.type + "' " +
+                "Title = '" + rsstoupdate.title + "' " +
+                "WHERE Id = " + rsstoupdate.id;
+            Console.WriteLine(sqlsentence);
+
+            return 0;
+        }
+
+        public int deleteItem(long id)
+        {
+            string sqlsentence =
+                "DELETE FROM RssDirections WHERE Id = " + id;
+            Console.WriteLine(sqlsentence);
+
+            return 0;
+        }
+
+        public RSSContact retrieveItem(long id)
+        {
+            string sqlsentence =
+                "SELECT * FROM RssDirections WHERE Id = " + id;
+            Console.WriteLine(sqlsentence);
+
+            return null;
+        }
+
+        public List<RSSContact> retrieneAllItems()
+        {
+            string sqlsentence =
+                "SELECT * FROM RssDirections";
+            Console.WriteLine(sqlsentence);
+
+            return null;
+        }
         #endregion
 
         #region "Other methods"
