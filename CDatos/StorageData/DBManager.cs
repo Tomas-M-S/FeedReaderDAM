@@ -4,14 +4,14 @@ using System.Data.OleDb;
 
 namespace CDatos.StorageData
 {
-    public class DBManage
+    public class DBManager
     {
         private OleDbConnection ConnectionWithDB;
         private OleDbDataReader Lector;
         private OleDbCommand Orden;
         private static string strConnection;
 
-        public DBManage()
+        public DBManager()
         {
             strConnection = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=|DataDirectory|\StorageData\DBRss.accdb";
             this.ConnectionWithDB = null;
@@ -46,8 +46,9 @@ namespace CDatos.StorageData
 
         public int executeDDL(string sqlSentence)
         {
+            int rows = 0;
             this.Orden = new OleDbCommand(sqlSentence, this.ConnectionWithDB);
-            int rows = this.Orden.ExecuteNonQuery();
+            rows = this.Orden.ExecuteNonQuery();
             return rows;
         }
     }
