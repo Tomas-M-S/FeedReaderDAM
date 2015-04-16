@@ -16,6 +16,7 @@ namespace CNegocio.Classes
         public List<CategoryRss> Categories { set; get; }
         public string Pubdate { set; get; }
         public string Guid { set; get; }
+        public SyndicationItem SyndItem { set; get; }
 
         #region "Constructores"
         public Item()
@@ -27,6 +28,7 @@ namespace CNegocio.Classes
             this.Categories =   new List<CategoryRss>();
             this.Pubdate =      String.Empty;
             this.Guid =         String.Empty;
+            this.SyndItem =     new SyndicationItem();
         }
 
         public Item(Item itemtocopy)
@@ -38,6 +40,7 @@ namespace CNegocio.Classes
             this.Categories =   itemtocopy.Categories;
             this.Pubdate =      itemtocopy.Pubdate;
             this.Guid =         itemtocopy.Guid;
+            this.SyndItem =     itemtocopy.SyndItem;
         }
 
         public Item(SyndicationItem itm)
@@ -49,6 +52,7 @@ namespace CNegocio.Classes
             this.Categories =   CategoryRss.NewListCategories(itm.Categories.ToList());
             this.Pubdate =      itm.PublishDate != null ? itm.PublishDate.ToString() : String.Empty;
             this.Guid =         itm.Id != null ? itm.Id : String.Empty;
+            this.SyndItem =     itm.Clone();
         }
         #endregion
 

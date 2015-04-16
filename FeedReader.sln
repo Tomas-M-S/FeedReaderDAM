@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CDatos", "CDatos\CDatos.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CNegocio", "CNegocio\CNegocio.csproj", "{1AB5A573-F8C2-4460-8A2A-BC38AB98EFD0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CVista", "CVista\CVista.csproj", "{881DC3A7-A618-4C65-A715-998EA4ACC021}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CVista", "CVista\CVista.csproj", "{B90F43AF-AE18-4DC4-9549-17430025B6F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{1AB5A573-F8C2-4460-8A2A-BC38AB98EFD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AB5A573-F8C2-4460-8A2A-BC38AB98EFD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1AB5A573-F8C2-4460-8A2A-BC38AB98EFD0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{881DC3A7-A618-4C65-A715-998EA4ACC021}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{881DC3A7-A618-4C65-A715-998EA4ACC021}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{881DC3A7-A618-4C65-A715-998EA4ACC021}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{881DC3A7-A618-4C65-A715-998EA4ACC021}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B90F43AF-AE18-4DC4-9549-17430025B6F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B90F43AF-AE18-4DC4-9549-17430025B6F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B90F43AF-AE18-4DC4-9549-17430025B6F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B90F43AF-AE18-4DC4-9549-17430025B6F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CDatos.ConnectionWeb;
 
-namespace CNegocio
+namespace CNegocio.WBManager
 {
     public class WebServiciesManager
     {

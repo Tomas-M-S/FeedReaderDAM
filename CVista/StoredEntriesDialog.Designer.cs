@@ -1,6 +1,6 @@
 ﻿namespace CVista
 {
-    partial class RssContactDialog
+    partial class StoredEntriesDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -28,17 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
-            // 
-            // RssContactDialog
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(498, 455);
-            this.Name = "RssContactDialog";
-            this.Text = "RssContactDialog";
-            this.ResumeLayout(false);
-
+            this.Text = "StoredEntriesDialog";
         }
 
         #endregion

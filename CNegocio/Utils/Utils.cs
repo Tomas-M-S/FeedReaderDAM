@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ServiceModel.Syndication;
+using System.Data;
 using CDatos.DBEntities;
+using CNegocio.Classes;
 
-namespace CNegocio.Classes
+namespace CNegocio.Utils
 {
     public class Utils
     {
@@ -54,15 +56,16 @@ namespace CNegocio.Classes
             return 0;
         }
 
-        public static List<RSSContactDB> retrieveRssContact()
+        public static DataTable /*List<RSSContactDB>*/ retrieveRssContact()
         {
-            List<RSSContactDB> listRss = new List<RSSContactDB>();
+            //List<RSSContactDB> listRss = RSSContactDB.retrieveAllRss();
 
-            return listRss;
+            return RSSContactDB.retrieveAllRss();
         }
         #endregion
 
         #region "Other methods"
+
         #endregion
     }
 }

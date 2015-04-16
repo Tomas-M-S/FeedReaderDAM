@@ -9,6 +9,7 @@ namespace CDatos.StorageData
         private OleDbConnection ConnectionWithDB;
         private OleDbDataReader Lector;
         private OleDbCommand Orden;
+        private DataTable dtSalida;
         private static string strConnection;
 
         public DBManager()
@@ -17,6 +18,7 @@ namespace CDatos.StorageData
             this.ConnectionWithDB = null;
             this.Lector = null;
             this.Orden = null;
+            this.dtSalida = null;
         }
 
         public void OpenDB()
@@ -35,13 +37,20 @@ namespace CDatos.StorageData
             {
                 this.ConnectionWithDB.Close();
             }
+            if (this.dtSalida != null)
+            {
+                this.dtSalida.Dispose();
+            }
         }
 
-        public OleDbDataReader executeDML(string sqlSentence)
+        public DataTable executeDML(string sqlSentence)
         {
             this.Orden = new OleDbCommand(sqlSentence, this.ConnectionWithDB);
             this.Lector = this.Orden.ExecuteReader();
-            return this.Lector;
+            this.dtSalida = new DataTable();
+            this.dtSalida.Load(this.Lector);
+
+            return this.dtSalida;
         }
 
         public int executeDDL(string sqlSentence)

@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace CVista
 {
-    public partial class RssContactDialog : Form
+    public partial class ModifyFeedDialog : Form
     {
-        public RssContactDialog()
+        public ModifyFeedDialog()
         {
             InitializeComponent();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{881DC3A7-A618-4C65-A715-998EA4ACC021}</ProjectGuid>
+    <ProjectGuid>{B90F43AF-AE18-4DC4-9549-17430025B6F5}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CVista</RootNamespace>
@@ -44,17 +44,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CreditosDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreditosDialog.Designer.cs">
+      <DependentUpon>CreditosDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="ItemsDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ItemsDialog.Designer.cs">
       <DependentUpon>ItemsDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="RssContactDialog.cs">
+    <Compile Include="ModifyFeedDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RssContactDialog.Designer.cs">
-      <DependentUpon>RssContactDialog.cs</DependentUpon>
+    <Compile Include="ModifyFeedDialog.Designer.cs">
+      <DependentUpon>ModifyFeedDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RssContactsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RssContactsDialog.Designer.cs">
+      <DependentUpon>RssContactsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StoredEntriesDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StoredEntriesDialog.Designer.cs">
+      <DependentUpon>StoredEntriesDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="WrapWindow.cs">
       <SubType>Form</SubType>
@@ -64,8 +82,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="RssContactDialog.resx">
-      <DependentUpon>RssContactDialog.cs</DependentUpon>
+    <EmbeddedResource Include="CreditosDialog.resx">
+      <DependentUpon>CreditosDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModifyFeedDialog.resx">
+      <DependentUpon>ModifyFeedDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RssContactsDialog.resx">
+      <DependentUpon>RssContactsDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WrapWindow.resx">
       <DependentUpon>WrapWindow.cs</DependentUpon>
@@ -78,6 +102,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -93,10 +118,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CDatos\CDatos.csproj">
+      <Project>{95d3c97e-29df-456b-ad9b-b4143082c9c8}</Project>
+      <Name>CDatos</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CNegocio\CNegocio.csproj">
       <Project>{1ab5a573-f8c2-4460-8a2a-bc38ab98efd0}</Project>
       <Name>CNegocio</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\Rss.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
