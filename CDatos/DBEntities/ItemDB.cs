@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using System.Data;
 using System.Data.OleDb;
 using CDatos.StorageData;
 
@@ -63,8 +64,7 @@ namespace CDatos.DBEntities
         {
             DBManager manDB = new DBManager();
             int result = 0;
-            string sqlsentence =
-                "INSERT INTO StoredEntries " +
+            string sqlsentence = "INSERT INTO StoredEntries " +
                 "(Id,Active,SaveDate,IdOrigin,Content) " +
                 "VALUES (" +
                 itemtosave.savedate.ToString() + "'," +
@@ -83,8 +83,7 @@ namespace CDatos.DBEntities
         {
             DBManager manDB = new DBManager();
             int result = 0;
-            string sqlsentence =
-                "UPDATE StoredEntries " +
+            string sqlsentence = "UPDATE StoredEntries " +
                 "SET Active = '" + itemtoupdate.active + "', " +
                 "SaveDate = '" + itemtoupdate.savedate.ToString() + "', " +
                 "IdOrigin = " + itemtoupdate.idoriginrss + ", " +
@@ -99,7 +98,7 @@ namespace CDatos.DBEntities
             return result;
         }
 
-        public static int deleteItem(long id)
+        public static int deleteItem(int id)
         {
             DBManager manDB = new DBManager();
             int result = 0;
@@ -115,58 +114,42 @@ namespace CDatos.DBEntities
         }
 
         
-        public static ItemDB retrieveItem(long id)
-        {/*
+        public static DataTable retrieveItem(int id)
+        {
             DBManager manDB = new DBManager();
-            ItemDB item = null;
-            OleDbDataReader itemDBansware;
-            string sqlsentence =
-                "SELECT * FROM StoredEntries WHERE Id = " + id;
+            string sqlsentence = "SELECT " +
+                "etrs.Id AS ID, " +
+                "etrs.SaveDate AS Fecha, " +
+                "etrs.Content AS Comentario " +
+                "FROM StoredEntries AS etrs " +
+                "WHERE etrs.Active = TRUE " +
+                "AND etrs.IdOrigin = " + id;
             //Console.WriteLine(sqlsentence);
 
             manDB.OpenDB();
-            itemDBansware = manDB.executeDML(sqlsentence);
-            while (itemDBansware.Read())
-            {
-                int col1 = itemDBansware.GetInt32(0);
-                bool col2 = itemDBansware.GetBoolean(1);
-                DateTime col3 = itemDBansware.GetDateTime(2);
-                int col4 = itemDBansware.GetInt32(3);
-                String col5 = itemDBansware.GetString(4);
-                item = new ItemDB(col1, col2, col3, col4, col5);
-            }
+            DataTable dt = manDB.executeDML(sqlsentence);
             manDB.CloseDB();
-            itemDBansware.Close();
 
-            return item;*/
-            return null;
+            return dt;
         }
 
-        public static List<ItemDB> retrieneAllItems()
-        {/*
+        public static DataTable retrieneAllItems()
+        {
             DBManager manDB = new DBManager();
-            List<ItemDB> itemList = new List<ItemDB>();
-            OleDbDataReader itemDBansware;
-            string sqlsentence =
-                "SELECT * FROM StoredEntries";
+            string sqlsentence = "SELECT " +
+                "etrs.Id AS ID, " +
+                "etrs.SaveDate AS Fecha, " +
+                "etrs.IdOrigin AS IdOrigen, " +
+                "etrs.Content AS Comentario " +
+                "FROM StoredEntries AS etrs " +
+                "WHERE etrs.Active = TRUE ";
             //Console.WriteLine(sqlsentence);
 
             manDB.OpenDB();
-            itemDBansware = manDB.executeDML(sqlsentence);
-            while (itemDBansware.Read())
-            {
-                int col1 = itemDBansware.GetInt32(0);
-                bool col2 = itemDBansware.GetBoolean(1);
-                DateTime col3 = itemDBansware.GetDateTime(2);
-                int col4 = itemDBansware.GetInt32(3);
-                String col5 = itemDBansware.GetString(4);
-                itemList.Add(new ItemDB(col1, col2, col3, col4, col5));
-            }
+            DataTable dt = manDB.executeDML(sqlsentence);
             manDB.CloseDB();
-            itemDBansware.Close();
 
-            return itemList;*/
-            return null;
+            return dt;
         }
         #endregion
 

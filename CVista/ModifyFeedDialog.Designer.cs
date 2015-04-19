@@ -138,6 +138,10 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Periódico",
+            "Blog",
+            "Otro"});
             this.comboBox1.Location = new System.Drawing.Point(95, 123);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 21);
@@ -151,6 +155,7 @@
             this.button1.TabIndex = 12;
             this.button1.Text = "Añadir";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -184,6 +189,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "ModifyFeedDialog";
             this.Text = "ModifyFeedDialog";
+            this.Load += new System.EventHandler(this.ModifyFeedDialog_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

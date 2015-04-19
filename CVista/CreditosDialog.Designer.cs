@@ -100,10 +100,10 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::CVista.Properties.Resources.Rss;
-            this.pictureBox1.Location = new System.Drawing.Point(319, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(331, 22);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 100);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.Size = new System.Drawing.Size(77, 76);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
             // 

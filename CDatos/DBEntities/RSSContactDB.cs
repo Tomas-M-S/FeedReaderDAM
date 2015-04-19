@@ -44,7 +44,7 @@ namespace CDatos.DBEntities
         public RSSContactDB(DateTime fecha, string url, string comm, string type, string title)
         {
             this.id =       -1;
-            this.active =   false;
+            this.active =   true;
             this.savedate = fecha;
             this.url =      url;
             this.comment =  comm;
@@ -69,11 +69,10 @@ namespace CDatos.DBEntities
         {
             DBManager manDB = new DBManager();
             int result = 0;
-            string sqlsentence =
-                "INSERT INTO RssDirections " +
+            string sqlsentence = "INSERT INTO RssDirections " +
                 "(SaveDate,Direction,Comment,Type,Title) " +
                 "VALUES ('" +
-                rsstosave.savedate.ToString() + "','" +
+                rsstosave.savedate.ToString("d") + "','" +
                 rsstosave.url + "','" +
                 rsstosave.comment + "','" +
                 rsstosave.type + "','" +
@@ -91,10 +90,9 @@ namespace CDatos.DBEntities
         {
             DBManager manDB = new DBManager();
             int result = 0;
-            string sqlsentence =
-                "UPDATE RssDirections " +
-                "SET Active = '" + rsstoupdate.active + "', " +
-                "SaveDate = '" + rsstoupdate.savedate.ToString() + "', " +
+            string sqlsentence = "UPDATE RssDirections " +
+                "SET Active = " + rsstoupdate.active + ", " +
+                "SaveDate = '" + rsstoupdate.savedate.ToString("d") + "', " +
                 "Direction = '" + rsstoupdate.url + "', " +
                 "Comment = '" + rsstoupdate.comment + "', " +
                 "Type = '" + rsstoupdate.type + "', " +
@@ -109,12 +107,13 @@ namespace CDatos.DBEntities
             return result;
         }
 
-        public static int deleteRss(long id)
+        public static int deleteRss(int id)
         {
             DBManager manDB = new DBManager();
             int result = 0;
-            string sqlsentence =
-                "DELETE FROM RssDirections WHERE Id = " + id;
+            string sqlsentence = "DELETE " +
+                "FROM RssDirections " +
+                "WHERE Id = " + id;
             //Console.WriteLine(sqlsentence);
 
             manDB.OpenDB();
@@ -124,36 +123,19 @@ namespace CDatos.DBEntities
             return result;
         }
 
-        public static DataTable /*RSSContactDB*/ retrieveRss(long id)
+        public static DataTable retrieveRss(int id)
         {
-            /*
             DBManager manDB = new DBManager();
-            RSSContactDB rss = null;
-            OleDbDataReader rssDBansware;
-            string sqlsentence =
-                "SELECT * FROM RssDirections WHERE Id = " + id;
-            //Console.WriteLine(sqlsentence);
-
-            manDB.OpenDB();
-            rssDBansware = manDB.executeDML(sqlsentence);
-            while (rssDBansware.Read())
-            {
-                int col1 = rssDBansware.GetInt32(0);
-                bool col2 = rssDBansware.GetBoolean(1);
-                DateTime col3 = rssDBansware.GetDateTime(2);
-                String col4 = rssDBansware.GetString(3);
-                String col5 = rssDBansware.GetString(4);
-                String col6 = rssDBansware.GetString(5);
-                String col7 = rssDBansware.GetString(6);
-                rss = new RSSContactDB(col1, col2, col3, col4, col5, col6, col7);
-            }
-            manDB.CloseDB();
-            rssDBansware.Close();
-             */
-
-            DBManager manDB = new DBManager();
-            string sqlsentence =
-                "SELECT * FROM RssDirections WHERE Id = " + id;
+            string sqlsentence = "SELECT " +
+                "rssd.Id AS ID, " +
+                "rssd.SaveDate AS Fecha, " +
+                "rssd.Direction AS URL, " +
+                "rssd.Comment AS Comentario, " +
+                "rssd.Type AS Tipo, " +
+                "rssd.Title AS Titulo " +
+                "FROM RssDirections AS rssd " +
+                "WHERE rssd.Active = TRUE " +
+                "AND rssd.Id = " + id;
             //Console.WriteLine(sqlsentence);
 
             manDB.OpenDB();
@@ -163,36 +145,18 @@ namespace CDatos.DBEntities
             return dt;
         }
 
-        public static DataTable /*List<RSSContactDB>*/ retrieveAllRss()
+        public static DataTable retrieveAllRss()
         {
-            /*
             DBManager manDB = new DBManager();
-            List<RSSContactDB> rssList = new List<RSSContactDB>();
-            OleDbDataReader rssDBansware;
-            string sqlsentence =
-                "SELECT * FROM RssDirections";
-            //Console.WriteLine(sqlsentence);
-
-            manDB.OpenDB();
-            rssDBansware = manDB.executeDML(sqlsentence);
-            while (rssDBansware.Read())
-            {
-                int col1 = rssDBansware.GetInt32(0);
-                bool col2 = rssDBansware.GetBoolean(1);
-                DateTime col3 = rssDBansware.GetDateTime(2);
-                String col4 = rssDBansware.GetString(3);
-                String col5 = rssDBansware.GetString(4);
-                String col6 = rssDBansware.GetString(5);
-                String col7 = rssDBansware.GetString(6);
-                rssList.Add(new RSSContactDB(col1, col2, col3, col4, col5, col6, col7));
-            }
-            manDB.CloseDB();
-            rssDBansware.Close();
-             */
-
-            DBManager manDB = new DBManager();
-            string sqlsentence =
-                "SELECT * FROM RssDirections";
+            string sqlsentence = "SELECT " +
+                "rssd.Id AS ID, " +
+                "rssd.SaveDate AS Fecha, " +
+                "rssd.Direction AS URL, " +
+                "rssd.Comment AS Comentario, " +
+                "rssd.Type AS Tipo, " +
+                "rssd.Title AS Titulo " +
+                "FROM RssDirections AS rssd " +
+                "WHERE rssd.Active = TRUE";
             //Console.WriteLine(sqlsentence);
 
             manDB.OpenDB();

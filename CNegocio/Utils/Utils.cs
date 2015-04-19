@@ -10,6 +10,12 @@ using CNegocio.Classes;
 
 namespace CNegocio.Utils
 {
+    public class Constants
+    {
+        public static int MODIFY_FEED = 0;
+        public static int CREATE_FEED = 1;
+    }
+
     public class Utils
     {
         #region "Access DB service ItemDB"
@@ -18,48 +24,64 @@ namespace CNegocio.Utils
             ItemDB itmdb = new ItemDB();
             itmdb.savedate = dtnow;
             itmdb.idoriginrss = ido;
-            //itmdb.content = ;
+            itmdb.content = itemToSave.SyndItem.ToString();
             return ItemDB.saveItem(itmdb);
         }
 
-        public static int updateItem(Item itemToSave, int id, DateTime dtnow, int ido)
+        public static int updateItem(Item itemToUpdate, int id, DateTime dtnow, int ido)
         {
-            return 0;
+            ItemDB itmdb = new ItemDB();
+            itmdb.savedate = dtnow;
+            itmdb.idoriginrss = ido;
+            itmdb.content = itemToUpdate.SyndItem.ToString();
+            return ItemDB.saveItem(itmdb);
         }
 
-        public static int deleteItem()
+        public static int deleteItem(int id)
         {
-            return 0;
+            return Utils.deleteItem(id);
         }
 
-        public static List<ItemDB> retrieveItems()
+        public static DataTable retrieveItems(int idfeed)
         {
-            List<ItemDB> listItems = new List<ItemDB>();
-
-            return listItems;
+            return Utils.retrieveItems(idfeed);
         }
         #endregion
 
         #region "Access DB service RSSContactDB"
-        public static int saveRssContact()
+        public static int saveRssContact(DateTime fecha, string url, string comm, string type, string title)
         {
-            return 0;
+            RSSContactDB newRss = new RSSContactDB();
+            newRss.savedate = fecha;
+            newRss.url = url;
+            newRss.comment = comm;
+            newRss.type = type;
+            newRss.title = title;
+
+            return RSSContactDB.saveRss(newRss);
         }
 
-        public static int updateRssContact()
+        public static int updateRssContact(int id, bool active, DateTime fecha, string url, string comm, string type, string title)
         {
-            return 0;
+            RSSContactDB newRss = new RSSContactDB();
+            newRss.id = id;
+            newRss.active = active;
+            newRss.savedate = fecha;
+            newRss.url = url;
+            newRss.comment = comm;
+            newRss.type = type;
+            newRss.title = title;
+
+            return RSSContactDB.updateRss(newRss);
         }
 
-        public static int deleteRssContact()
+        public static int deleteRssContact(int id)
         {
-            return 0;
+            return RSSContactDB.deleteRss(id);
         }
 
-        public static DataTable /*List<RSSContactDB>*/ retrieveRssContact()
+        public static DataTable retrieveRssContact()
         {
-            //List<RSSContactDB> listRss = RSSContactDB.retrieveAllRss();
-
             return RSSContactDB.retrieveAllRss();
         }
         #endregion
