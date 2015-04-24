@@ -45,20 +45,33 @@ namespace CDatos.StorageData
 
         public DataTable executeDML(string sqlSentence)
         {
-            this.Orden = new OleDbCommand(sqlSentence, this.ConnectionWithDB);
-            this.Lector = this.Orden.ExecuteReader();
-            this.dtSalida = new DataTable();
-            this.dtSalida.Load(this.Lector);
-
-            return this.dtSalida;
+            try
+            {
+                this.Orden = new OleDbCommand(sqlSentence, this.ConnectionWithDB);
+                this.Lector = this.Orden.ExecuteReader();
+                this.dtSalida = new DataTable();
+                this.dtSalida.Load(this.Lector);
+                return this.dtSalida;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al ejecutar la sentencia DML: " + Environment.NewLine + ex.Message);
+            }
         }
 
         public int executeDDL(string sqlSentence)
         {
             int rows = 0;
-            this.Orden = new OleDbCommand(sqlSentence, this.ConnectionWithDB);
-            rows = this.Orden.ExecuteNonQuery();
-            return rows;
+            try
+            {
+                this.Orden = new OleDbCommand(sqlSentence, this.ConnectionWithDB);
+                rows = this.Orden.ExecuteNonQuery();
+                return rows;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al ejecutar la sentencia DDL: " + Environment.NewLine + ex.Message);
+            }
         }
     }
 }

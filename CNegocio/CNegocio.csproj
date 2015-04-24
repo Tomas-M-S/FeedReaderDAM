@@ -46,6 +46,8 @@
     <Compile Include="Classes\PersonRss.cs" />
     <Compile Include="Classes\RssFeed.cs" />
     <Compile Include="Utils\Utils.cs" />
+    <Compile Include="WBManager\CheckUpdatedThread.cs" />
+    <Compile Include="WBManager\UpdatedEventArgs.cs" />
     <Compile Include="WBManager\WebServiciesManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

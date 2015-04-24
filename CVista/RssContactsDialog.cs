@@ -8,16 +8,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CNegocio.Utils;
+using CNegocio.WBManager;
 
 namespace CVista
 {
     public partial class RssContactsDialog : Form
     {
         private int rowIndex;
+        WebServiciesManager dataConect;
 
         public RssContactsDialog()
         {
             this.rowIndex = -1;
+            this.dataConect = null;
             InitializeComponent();
         }
 
@@ -25,7 +28,7 @@ namespace CVista
         {
             try
             {
-                uint interv = Convert.ToUInt32(textBox2.Text);
+                int interv = Convert.ToInt32(textBox2.Text);
                 Properties.Settings.Default.intervalo = interv;
                 Properties.Settings.Default.Save();
                 this.textBox1.Text = Properties.Settings.Default.intervalo.ToString();
@@ -56,6 +59,8 @@ namespace CVista
 
         private void button1_Click(object sender, EventArgs e)
         {
+            WebServiciesManager dataConect = null;
+
             String textboton = button1.Text;
             if (textboton.Equals("ACTIVAR"))
             {
@@ -67,6 +72,16 @@ namespace CVista
                 this.button4.Enabled = false;
                 this.label4.Text = "Edición desactivada";
                 this.label4.ForeColor = Color.Red;
+
+
+                this.dataConect = new WebServiciesManager(Properties.Settings.Default.intervalo);
+                foreach (CheckUpdatedThread item in this.dataConect.listwork)
+	            {
+                    item.updatedFeed += event_updatedFeed;
+	            }
+                this.dataConect.LanzarHilos();
+                
+
             }
             else
             {
@@ -78,11 +93,20 @@ namespace CVista
                 this.button4.Enabled = true;
                 this.label4.Text = "Edición activada";
                 this.label4.ForeColor = Color.Green;
+
+                if (dataConect != null)
+                {
+                    this.dataConect.DetenerHilos();
+                }
             }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
+            if (dataConect != null)
+            {
+                this.dataConect.DetenerHilos();
+            }
             this.Close();
         }
 
@@ -117,7 +141,6 @@ namespace CVista
         {
             if (!this.dataGridView1.Rows[this.rowIndex].IsNewRow)
             {
-                //this.dataGridView1.Rows.RemoveAt(this.rowIndex);
                 int id = (int)this.dataGridView1.Rows[this.rowIndex].Cells[0].Value;
 
                 if (MessageBox.Show("¿Estas seguro de que desea eliminar este Feed?", "Eliminar Feed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
@@ -203,18 +226,7 @@ namespace CVista
                     string urlfeed = dtRow["URL"].ToString();
                     string commfeed = dtRow["Comentario"].ToString();
 
-                    if (tipofeed.Equals("Blog"))
-                    {
-                        this.dataGridView1.Rows.Add(Properties.Resources.greydot, idfeed, titulofeed, tipofeed, urlfeed, commfeed);
-                    }
-                    else if (tipofeed.Equals("Periódico"))
-                    {
-                        this.dataGridView1.Rows.Add(Properties.Resources.reddot, idfeed, titulofeed, tipofeed, urlfeed, commfeed);
-                    }
-                    else
-                    {
-                        this.dataGridView1.Rows.Add(Properties.Resources.greendot, idfeed, titulofeed, tipofeed, urlfeed, commfeed);
-                    }
+                    this.dataGridView1.Rows.Add(Properties.Resources.greydot, idfeed, titulofeed, tipofeed, urlfeed, commfeed);
                 }
             }
         }
@@ -222,6 +234,37 @@ namespace CVista
         protected void cargarTabla2()
         {
             this.dataGridView2.DataSource = Utils.retrieveRssContact();
+        }
+
+        public void event_updatedFeed(object sender, UpdatedEventArgs e)
+        {
+            int id = e.rss.id;
+            foreach (DataGridViewRow itemRow in this.dataGridView1.Rows)
+            {
+                int iddgv = (int)itemRow.Cells[1].Value;
+                if (id == iddgv)
+                {
+                    DataGridViewImageCell cell = (DataGridViewImageCell)this.dataGridView1.Rows[itemRow.Index].Cells[0];
+
+                    // http://stackoverflow.com/questions/2359124/datagridview-throwing-invalidoperationexception-operation-is-not-valid-whe
+                    this.dataGridView1.BeginEdit(false);
+                    this.dataGridView1.NotifyCurrentCellDirty(true);
+
+                    if (e.status == 1)
+                    {
+                        cell.Value = Properties.Resources.greendot;
+                        cell.ToolTipText = "El feed ha sido actualizado";
+                    }
+                    if (e.status == -1)
+                    {
+                        cell.Value = Properties.Resources.reddot;
+                        cell.ToolTipText = "No se pudo contactar con el feed";
+                    }
+                    
+                    this.dataGridView1.EndEdit();
+                    this.dataGridView1.NotifyCurrentCellDirty(false);
+                }
+            }
         }
     }
 }

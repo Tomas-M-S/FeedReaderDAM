@@ -63,16 +63,6 @@ namespace CVista.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap bluedot {
-            get {
-                object obj = ResourceManager.GetObject("bluedot", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap greendot {
             get {
                 object obj = ResourceManager.GetObject("greendot", resourceCulture);

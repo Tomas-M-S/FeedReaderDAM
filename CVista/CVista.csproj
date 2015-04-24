@@ -149,10 +149,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\bluedot.bmp" />
-    <Content Include="Images\greendot.bmp" />
-    <Content Include="Images\greydot.bmp" />
-    <Content Include="Images\reddot.bmp" />
+    <None Include="Images\greendot.png" />
+    <None Include="Images\greydot.png" />
+    <None Include="Images\reddot.png" />
     <Content Include="Images\Rss.gif" />
     <Content Include="Images\RssIcon.ico" />
   </ItemGroup>

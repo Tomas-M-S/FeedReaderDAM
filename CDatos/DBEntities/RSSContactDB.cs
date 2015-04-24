@@ -165,6 +165,78 @@ namespace CDatos.DBEntities
 
             return dt;
         }
+
+        public static RSSContactDB retrieveObjectRssDB(int id)
+        {
+            RSSContactDB rssObject = new RSSContactDB();
+            DBManager manDB = new DBManager();
+            string sqlsentence = "SELECT " +
+                "rssd.Id AS ID, " +
+                "rssd.SaveDate AS Fecha, " +
+                "rssd.Direction AS URL, " +
+                "rssd.Comment AS Comentario, " +
+                "rssd.Type AS Tipo, " +
+                "rssd.Title AS Titulo " +
+                "FROM RssDirections AS rssd " +
+                "WHERE rssd.Active = TRUE " +
+                "AND rssd.Id = " + id;
+            //Console.WriteLine(sqlsentence);
+
+            manDB.OpenDB();
+            DataTable dt = manDB.executeDML(sqlsentence);
+            manDB.CloseDB();
+
+            // Adaptar DataTable a RSSContactDB
+            rssObject.id = (int)dt.Rows[0]["ID"];
+            rssObject.active = true;
+            rssObject.savedate = (DateTime)dt.Rows[0]["Fecha"];
+            rssObject.url = (string)dt.Rows[0]["URL"];
+            rssObject.comment = (string)dt.Rows[0]["Comentario"];
+            rssObject.type = (string)dt.Rows[0]["Tipo"];
+            rssObject.title = (string)dt.Rows[0]["Titulo"];
+
+            return rssObject;
+        }
+
+        public static List<RSSContactDB> retrieveListAllRss()
+        {
+            List<RSSContactDB> list = new List<RSSContactDB>();
+            DBManager manDB = new DBManager();
+            string sqlsentence = "SELECT " +
+                "rssd.Id AS ID, " +
+                "rssd.SaveDate AS Fecha, " +
+                "rssd.Direction AS URL, " +
+                "rssd.Comment AS Comentario, " +
+                "rssd.Type AS Tipo, " +
+                "rssd.Title AS Titulo " +
+                "FROM RssDirections AS rssd " +
+                "WHERE rssd.Active = TRUE";
+            //Console.WriteLine(sqlsentence);
+
+            manDB.OpenDB();
+            DataTable dt = manDB.executeDML(sqlsentence);
+            manDB.CloseDB();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                RSSContactDB rss = new RSSContactDB();
+                rss.id = (int)row["ID"];
+                rss.active = true;
+                rss.savedate = (DateTime)row["Fecha"];
+                rss.url = (string)row["URL"];
+                rss.comment = (string)row["Comentario"];
+                rss.type = (string)row["Tipo"];
+                rss.title = (string)row["Titulo"];
+                list.Add(rss);
+            }
+
+            foreach (RSSContactDB item in list)
+            {
+                Console.WriteLine(item.ToString());
+            }
+
+            return list;
+        }
         #endregion
 
         #region "Other methods"

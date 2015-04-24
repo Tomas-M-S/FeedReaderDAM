@@ -26,9 +26,9 @@ namespace CVista.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("10000")]
-        public uint intervalo {
+        public int intervalo {
             get {
-                return ((uint)(this["intervalo"]));
+                return ((int)(this["intervalo"]));
             }
             set {
                 this["intervalo"] = value;
