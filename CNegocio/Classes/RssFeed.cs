@@ -9,11 +9,12 @@ namespace CNegocio.Classes
 {
     public class RssFeed
     {
+        // Datos obligatorios del feed según el estándar RSS 2.0
         public string Title { set; get; }
         public string Description { set; get; }
         public List<LinkRss> Link { set; get; }
 
-        // Optional items
+        // Datos opcionales del feed según el estándar RSS 2.0
         public string Language { set; get; }
         public string Copyright { set; get; }
         public List<PersonRss> autors { set; get; }
@@ -22,6 +23,9 @@ namespace CNegocio.Classes
         public List<Item> Items { set; get; }
 
         #region "Constructores"
+        /// <summary>
+        /// Constructor vacío
+        /// </summary>
         public RssFeed()
         {
             this.Title =            String.Empty;
@@ -35,6 +39,10 @@ namespace CNegocio.Classes
             this.Items =            new List<Item>();
         }
 
+        /// <summary>
+        /// Constructor de copia
+        /// </summary>
+        /// <param name="rsscopy">(RssFeed) Objeto a copiar</param>
         public RssFeed(RssFeed rsscopy)
         {
             this.Title =            rsscopy.Title;
@@ -48,6 +56,10 @@ namespace CNegocio.Classes
             this.Items =            new List<Item>(rsscopy.Items);
         }
 
+        /// <summary>
+        /// Constructor de objeto mediante un SyndicationFeed
+        /// </summary>
+        /// <param name="rss">(SyndicationFeed) Objeto con los datos necesarios para iniciar un RssFeed</param>
         public RssFeed(SyndicationFeed rss)
         {
             this.Title =            rss.Title != null ? rss.Title.Text : String.Empty;
@@ -56,13 +68,10 @@ namespace CNegocio.Classes
             this.Language =         rss.Language != null ? rss.Language : String.Empty;
             this.Copyright =        rss.Copyright != null ? rss.Copyright.Text : String.Empty;
             this.autors =           PersonRss.NewListPersons(rss.Authors.ToList());
-            this.LastBuildDate =    rss.LastUpdatedTime != null ? rss.LastUpdatedTime.ToString() : String.Empty;
+            this.LastBuildDate =    rss.LastUpdatedTime.ToString();
             this.Categories =       CategoryRss.NewListCategories(rss.Categories.ToList());
             this.Items =            Item.NewListItems(rss.Items.ToList());
         }
-        #endregion
-
-        #region "Otros métodos"
         #endregion
     }
 }

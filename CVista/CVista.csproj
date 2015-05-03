@@ -47,7 +47,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Images\RssIcon.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\RssIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -62,6 +62,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BrowserDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BrowserDialog.Designer.cs">
+      <DependentUpon>BrowserDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="CreditosDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -74,11 +80,22 @@
     <Compile Include="ItemsDialog.Designer.cs">
       <DependentUpon>ItemsDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="ItemView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItemView.Designer.cs">
+      <DependentUpon>ItemView.cs</DependentUpon>
+    </Compile>
     <Compile Include="ModifyFeedDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ModifyFeedDialog.Designer.cs">
       <DependentUpon>ModifyFeedDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="RssContactsDialog.cs">
       <SubType>Form</SubType>
@@ -100,8 +117,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="BrowserDialog.resx">
+      <DependentUpon>BrowserDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CreditosDialog.resx">
       <DependentUpon>CreditosDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItemsDialog.resx">
+      <DependentUpon>ItemsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItemView.resx">
+      <DependentUpon>ItemView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ModifyFeedDialog.resx">
       <DependentUpon>ModifyFeedDialog.cs</DependentUpon>
@@ -117,14 +143,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -139,21 +160,18 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CDatos\CDatos.csproj">
-      <Project>{95d3c97e-29df-456b-ad9b-b4143082c9c8}</Project>
-      <Name>CDatos</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CNegocio\CNegocio.csproj">
       <Project>{1ab5a573-f8c2-4460-8a2a-bc38ab98efd0}</Project>
       <Name>CNegocio</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Images\greendot.png" />
-    <None Include="Images\greydot.png" />
-    <None Include="Images\reddot.png" />
-    <Content Include="Images\Rss.gif" />
-    <Content Include="Images\RssIcon.ico" />
+    <None Include="Resources\negativedot.png" />
+    <None Include="Resources\greendot.png" />
+    <None Include="Resources\greydot.png" />
+    <None Include="Resources\reddot.png" />
+    <Content Include="Resources\Rss.gif" />
+    <Content Include="Resources\RssIcon.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">

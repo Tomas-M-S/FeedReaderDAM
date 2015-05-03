@@ -6,17 +6,30 @@ using CDatos.DBEntities;
 
 namespace CNegocio.WBManager
 {
+    /// <summary>
+    /// Clase controladora de los hilos de comprobación
+    /// </summary>
+    /// <author>Tomás Martínez Sempere</author>
+    /// <date>01/05/2015</date>
+    /// <see cref="CheckUpdateThread"/>
     public class WebServiciesManager
     {
+        // Variables globales de clase
         protected int range;
         protected List<RSSContactDB> rssList;
-        public List<CheckUpdatedThread> listwork { get; set; }
         protected List<Thread> listthread;
 
+        // Propiedades públicas
+        public List<CheckUpdatedThread> listwork { get; set; }
+
+        /// <summary>
+        /// Constructor de clase.
+        /// </summary>
+        /// <param name="range">(int) Intervalo de comprobación</param>
         public WebServiciesManager(int range)
         {
-            this.rssList = RSSContactDB.retrieveListAllRss();
             this.range = range;
+            this.rssList = RSSContactDB.retrieveListAllRss();
             this.listthread = new List<Thread>();
             this.listwork = new List<CheckUpdatedThread>();
 
@@ -26,11 +39,14 @@ namespace CNegocio.WBManager
                 listwork.Add(workerObject);
                 //workerObject.updatedFeed += event_updatedFeed;
 
-                Thread workerThread = new Thread(workerObject.DoWork);
+                Thread workerThread = new Thread(workerObject.RunLoop);
                 listthread.Add(workerThread);
             }
         }
 
+        /// <summary>
+        /// Lanza un hilo para cada feed.
+        /// </summary>
         public void LanzarHilos()
         {
             foreach (Thread item in listthread)
@@ -40,34 +56,16 @@ namespace CNegocio.WBManager
             //Console.WriteLine("Connected");
         }
 
+        /// <summary>
+        /// Detiene el loop de cada hilo.
+        /// </summary>
         public void DetenerHilos()
         {
             foreach (CheckUpdatedThread item in listwork)
             {
                 item.StopThread();
             }
-
-            this.rssList = null;
-            this.range = 0;
-            this.listthread = null;
-            this.listwork = null;
             //Console.WriteLine("Disconnected");
         }
-
-
-        //public static void event_updatedFeed(object sender, UpdatedEventArgs e)
-        //{
-        //    //DataGridViewImageCell cell = (DataGridViewImageCell)dataGridView1.Rows[2].Cells[0];
-        //    //cell.Value = Properties.Resources.greendot;
-
-        //    Console.WriteLine("--------------------------");
-        //    Console.WriteLine(e.rss.title);
-        //    Console.WriteLine("Anterior: " + e.time1.ToString());
-        //    Console.WriteLine("Nuevo: " + e.time2.ToString());
-        //    Console.WriteLine("Feed actualizado: " + e.status.ToString());
-        //    Console.WriteLine("Uri: " + e.rss.url);
-        //    Console.WriteLine("--------------------------");
-        //    //Environment.Exit(0);
-        //}
     }
 }

@@ -6,16 +6,31 @@ using System.Threading.Tasks;
 using System.ServiceModel.Syndication;
 using System.Data;
 using CDatos.DBEntities;
+using CDatos.ConnectionWeb;
 using CNegocio.Classes;
 
 namespace CNegocio.Utils
 {
+    /// <summary>
+    /// Clase con diversas constantes usadas en el programa
+    /// </summary>
     public class Constants
     {
         public static int MODIFY_FEED = 0;
         public static int CREATE_FEED = 1;
+
+        public static int FEED_UPDATED = 1;
+        public static int FEED_NO_CHANGES = 0;
+        public static int FEED_OFFLINE = -1;
+
+        public static string MSG_F_UPDATED = "Feed actualizado";
+        public static string MSG_F_NO_CHANGES = "Feed sin cambios";
+        public static string MSG_F_OFFLINE = "No se pudo contactar con el feed";
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class Utils
     {
         #region "Access DB service ItemDB"
@@ -24,7 +39,7 @@ namespace CNegocio.Utils
             ItemDB itmdb = new ItemDB();
             itmdb.savedate = dtnow;
             itmdb.idoriginrss = ido;
-            itmdb.content = itemToSave.SyndItem.ToString();
+            itmdb.content = itemToSave.Links[0].uri;
             return ItemDB.saveItem(itmdb);
         }
 
@@ -33,7 +48,7 @@ namespace CNegocio.Utils
             ItemDB itmdb = new ItemDB();
             itmdb.savedate = dtnow;
             itmdb.idoriginrss = ido;
-            itmdb.content = itemToUpdate.SyndItem.ToString();
+            itmdb.content = itemToUpdate.Links[0].uri;
             return ItemDB.saveItem(itmdb);
         }
 
@@ -44,7 +59,7 @@ namespace CNegocio.Utils
 
         public static DataTable retrieveItems(int idfeed)
         {
-            return Utils.retrieveItems(idfeed);
+            return ItemDB.retrieveItemByOrigin(idfeed);
         }
         #endregion
 
@@ -84,10 +99,27 @@ namespace CNegocio.Utils
         {
             return RSSContactDB.retrieveAllRss();
         }
-        #endregion
 
-        #region "Other methods"
+        public static RssFeed retrieveRssFeedContact(string uri)
+        {
+            DataWeb dw = new DataWeb(uri);
+            RssFeed contact = new RssFeed(SyndicationFeed.Load(dw.XmlDoc));
+            return contact;
+        }
 
+        public static List<string> retrieveFeedsWithItems()
+        {
+            List<string> list = new List<string>();
+
+            foreach (RSSContactDB item in RSSContactDB.retrieveListRssWithItems())
+            {
+                string itemmsg = "";
+                itemmsg += item.id + " - " + item.title;
+                list.Add(itemmsg);
+            }
+
+            return list;
+        }
         #endregion
     }
 }

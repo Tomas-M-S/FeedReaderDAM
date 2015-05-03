@@ -4,29 +4,49 @@ using System.Data.OleDb;
 
 namespace CDatos.StorageData
 {
+    /// <summary>
+    /// Clase controladora de la comunicación con la base de datos
+    /// </summary>
+    /// <author>Tomás Martínez Sempere</author>
+    /// <date>01/05/2015</date>
     public class DBManager
     {
+        // Variables globales de la clase
         private OleDbConnection ConnectionWithDB;
         private OleDbDataReader Lector;
         private OleDbCommand Orden;
         private DataTable dtSalida;
         private static string strConnection;
 
+        /// <summary>
+        /// Constructor para la clase DBManager
+        /// </summary>
         public DBManager()
         {
-            strConnection = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=|DataDirectory|\StorageData\DBRss.accdb";
+            //C:\Users\Tomas\Desktop\Martinez_Tomas_FeedReader\FeedReader\CDatos\bin\Debug\StorageData
+            //strConnection = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=|DataDirectory|\StorageData\DBRss.accdb";
+            //string path = System.IO.Directory.GetCurrentDirectory();
+            //string path2 = Environment.CurrentDirectory;
+            //Console.WriteLine(path2);
+            strConnection = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\Tomas\Desktop\Martinez_Tomas_FeedReader\FeedReader\CDatos\bin\Debug\StorageData\DBRss.accdb";
             this.ConnectionWithDB = null;
             this.Lector = null;
             this.Orden = null;
             this.dtSalida = null;
         }
 
+        /// <summary>
+        /// Abre la conexión a la base de datos
+        /// </summary>
         public void OpenDB()
         {
             this.ConnectionWithDB = new OleDbConnection(strConnection);
             this.ConnectionWithDB.Open();
         }
 
+        /// <summary>
+        /// Cierra la conexión a la base de datos
+        /// </summary>
         public void CloseDB()
         {
             if (this.Lector != null)
@@ -43,6 +63,11 @@ namespace CDatos.StorageData
             }
         }
 
+        /// <summary>
+        /// Ejecuta una consulta SQL (DML) sobre la base de datos del programa (select)
+        /// </summary>
+        /// <param name="sqlSentence">(string) Sentencia SQL a ejecutar</param>
+        /// <returns>(DataTable) Con la el resultado de la consulta</returns>
         public DataTable executeDML(string sqlSentence)
         {
             try
@@ -59,6 +84,11 @@ namespace CDatos.StorageData
             }
         }
 
+        /// <summary>
+        /// Ejecuta una sentencia SQL (DDL) sobre la base de datos de programa (inserts, deletes y updates)
+        /// </summary>
+        /// <param name="sqlSentence">(string) Sentencia SQL a ejecutar</param>
+        /// <returns>(int) Con el resultado de la ejecución (el número de filas afectadas)</returns>
         public int executeDDL(string sqlSentence)
         {
             int rows = 0;

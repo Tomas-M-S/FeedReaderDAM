@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -29,14 +27,22 @@ namespace CVista
             try
             {
                 int interv = Convert.ToInt32(textBox2.Text);
-                Properties.Settings.Default.intervalo = interv;
-                Properties.Settings.Default.Save();
-                this.textBox1.Text = Properties.Settings.Default.intervalo.ToString();
-                this.textBox2.Text = String.Empty;
+                if (interv >= 10000)
+                {
+                    Properties.Settings.Default.intervalo = interv;
+                    Properties.Settings.Default.Save();
+                    this.textBox1.Text = Properties.Settings.Default.intervalo.ToString();
+                    this.textBox2.Text = String.Empty;
+                }
+                else
+                {
+                    String msg = "Es recomendable un número igual o mayor de 10000 (10 segundos)";
+                    MessageBox.Show(msg);
+                }
             }
             catch (OverflowException ex)
             {
-                String msg = ex.Message + Environment.NewLine + " Debe de ser un número comprendido entre De 0 y 4294967295.";
+                String msg = ex.Message + Environment.NewLine + " Debe de ser un número comprendido entre De 10.000 a 2.147.483.647.";
                 MessageBox.Show(msg);
             }
             catch (FormatException ex)
@@ -73,15 +79,12 @@ namespace CVista
                 this.label4.Text = "Edición desactivada";
                 this.label4.ForeColor = Color.Red;
 
-
                 this.dataConect = new WebServiciesManager(Properties.Settings.Default.intervalo);
                 foreach (CheckUpdatedThread item in this.dataConect.listwork)
 	            {
                     item.updatedFeed += event_updatedFeed;
 	            }
                 this.dataConect.LanzarHilos();
-                
-
             }
             else
             {
@@ -119,6 +122,18 @@ namespace CVista
 
         private void dataGridView2_MouseClick(object sender, MouseEventArgs e)
         {
+        }
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            this.rowIndex = e.RowIndex;
+            int idfeed = (int)this.dataGridView1.Rows[this.rowIndex].Cells[1].Value;
+            string urifeed = (string)this.dataGridView1.Rows[this.rowIndex].Cells[4].Value;
+            string titulofeed = (string)this.dataGridView1.Rows[this.rowIndex].Cells[2].Value;
+
+            ItemsDialog id = new ItemsDialog(titulofeed, urifeed, idfeed);
+            id.MdiParent = WrapWindow.ActiveForm;
+            id.Show();
         }
 
         private void dataGridView2_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -179,10 +194,12 @@ namespace CVista
             DataTable dtfeeds = new DataTable();
             dtfeeds = Utils.retrieveRssContact();
 
+            // Definimos las columnas
+
             DataGridViewImageColumn col1 = new DataGridViewImageColumn();
             col1.Name = "estatus";
             col1.HeaderText = "Estatus";
-            col1.Image = Properties.Resources.greydot;
+            col1.Image = Properties.Resources.negativedot;
             col1.DisplayIndex = 0;
             this.dataGridView1.Columns.Add(col1);
 
@@ -216,6 +233,16 @@ namespace CVista
             col6.DisplayIndex = 5;
             this.dataGridView1.Columns.Add(col6);
 
+            DataGridViewTextBoxColumn col7 = new DataGridViewTextBoxColumn();
+            col7.Name = "codestate";
+            col7.HeaderText = "CODESTATE";
+            col7.DisplayIndex = 6;
+            col7.Visible = false;
+            this.dataGridView1.Columns.Add(col7);
+
+
+            // Insertamos las filas
+
             if (dtfeeds.Rows.Count > 0)
             {
                 foreach (DataRow dtRow in dtfeeds.Rows)
@@ -225,8 +252,9 @@ namespace CVista
                     string tipofeed = dtRow["Tipo"].ToString();
                     string urlfeed = dtRow["URL"].ToString();
                     string commfeed = dtRow["Comentario"].ToString();
+                    int statusid = 0;
 
-                    this.dataGridView1.Rows.Add(Properties.Resources.greydot, idfeed, titulofeed, tipofeed, urlfeed, commfeed);
+                    this.dataGridView1.Rows.Add(null, idfeed, titulofeed, tipofeed, urlfeed, commfeed, statusid);
                 }
             }
         }
@@ -236,33 +264,37 @@ namespace CVista
             this.dataGridView2.DataSource = Utils.retrieveRssContact();
         }
 
+
         public void event_updatedFeed(object sender, UpdatedEventArgs e)
         {
-            int id = e.rss.id;
+            int id = e.id;
             foreach (DataGridViewRow itemRow in this.dataGridView1.Rows)
             {
                 int iddgv = (int)itemRow.Cells[1].Value;
+                int statusid = (int)itemRow.Cells[6].Value;
                 if (id == iddgv)
                 {
                     DataGridViewImageCell cell = (DataGridViewImageCell)this.dataGridView1.Rows[itemRow.Index].Cells[0];
+                    DataGridViewTextBoxCell cellstatus = (DataGridViewTextBoxCell)this.dataGridView1.Rows[itemRow.Index].Cells[6];
 
-                    // http://stackoverflow.com/questions/2359124/datagridview-throwing-invalidoperationexception-operation-is-not-valid-whe
-                    this.dataGridView1.BeginEdit(false);
-                    this.dataGridView1.NotifyCurrentCellDirty(true);
-
-                    if (e.status == 1)
+                    if (e.status == 1 && e.status != statusid)
                     {
-                        cell.Value = Properties.Resources.greendot;
-                        cell.ToolTipText = "El feed ha sido actualizado";
+                        cell.Style.BackColor = Color.LimeGreen;
+                        cell.ToolTipText = e.message;
+                        cellstatus.Value = e.status;
                     }
-                    if (e.status == -1)
+                    if (e.status == -1 && e.status != statusid)
                     {
-                        cell.Value = Properties.Resources.reddot;
-                        cell.ToolTipText = "No se pudo contactar con el feed";
+                        cell.Style.BackColor = Color.Red;
+                        cell.ToolTipText = e.message;
+                        cellstatus.Value = e.status;
                     }
-                    
-                    this.dataGridView1.EndEdit();
-                    this.dataGridView1.NotifyCurrentCellDirty(false);
+                    if (e.status == 0 && statusid == -1)
+                    {
+                        cell.Style.BackColor = Color.LightGray;
+                        cell.ToolTipText = e.message;
+                        cellstatus.Value = e.status;
+                    }
                 }
             }
         }

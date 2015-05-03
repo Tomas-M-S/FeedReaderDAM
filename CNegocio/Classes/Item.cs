@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml;
+using System.Xml.Linq;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.ServiceModel.Syndication;
 
 namespace CNegocio.Classes
 {
     public class Item
     {
+        // Todos los elementos de un Item son opcionales
         public string Title { set; get; }
         public string Description { set; get; }
         public List<LinkRss> Links { set; get; }
@@ -19,6 +21,9 @@ namespace CNegocio.Classes
         public SyndicationItem SyndItem { set; get; }
 
         #region "Constructores"
+        /// <summary>
+        /// Constructor vacío
+        /// </summary>
         public Item()
         {
             this.Title =        String.Empty;
@@ -31,6 +36,10 @@ namespace CNegocio.Classes
             this.SyndItem =     new SyndicationItem();
         }
 
+        /// <summary>
+        /// Constructor de copia
+        /// </summary>
+        /// <param name="itemtocopy">(Item) Objeto a copiar</param>
         public Item(Item itemtocopy)
         {
             this.Title =        itemtocopy.Title;
@@ -43,6 +52,10 @@ namespace CNegocio.Classes
             this.SyndItem =     itemtocopy.SyndItem;
         }
 
+        /// <summary>
+        /// Constructor de objeto mediante un SyndicationItem
+        /// </summary>
+        /// <param name="itm">(SyndicationItem) Objeto con los datos necesarios para iniciar un Item</param>
         public Item(SyndicationItem itm)
         {
             this.Title =        itm.Title != null ? itm.Title.Text : String.Empty;
@@ -50,13 +63,18 @@ namespace CNegocio.Classes
             this.Links =        LinkRss.NewListLinks(itm.Links.ToList());
             this.Authors =      PersonRss.NewListPersons(itm.Authors.ToList());
             this.Categories =   CategoryRss.NewListCategories(itm.Categories.ToList());
-            this.Pubdate =      itm.PublishDate != null ? itm.PublishDate.ToString() : String.Empty;
+            this.Pubdate =      itm.PublishDate.ToString();
             this.Guid =         itm.Id != null ? itm.Id : String.Empty;
             this.SyndItem =     itm.Clone();
         }
         #endregion
 
         #region "Otros métodos"
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sItem"></param>
+        /// <returns>(List<Item>)</returns>
         public static List<Item> NewListItems(List<SyndicationItem> sItem)
         {
             List<Item> listItems = new List<Item>();
@@ -66,6 +84,39 @@ namespace CNegocio.Classes
             }
 
             return listItems;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>(string)</returns>
+        public override string ToString()
+        {
+            string msg = "";
+
+            if (this.Title != null)
+                msg += this.Title;
+            //if (this.Description != null)
+            //    msg += Environment.NewLine + "Descripción: " + this.Description;
+            //if (this.Links.Count > 0)
+            //    foreach (LinkRss item in this.Links)
+            //    {
+            //        msg += Environment.NewLine + "Link: " + item.uri;
+            //    }
+            //if (this.Authors.Count > 0)
+            //    foreach (PersonRss item in this.Authors)
+            //    {
+            //        msg += Environment.NewLine + "Link: " + item.name;
+            //    }
+            //if (this.Categories.Count > 0)
+            //    foreach (CategoryRss item in this.Categories)
+            //    {
+            //        msg += Environment.NewLine + "Categoria: " + item.name;
+            //    }
+            if (this.Pubdate != null)
+                msg += Environment.NewLine +  "Fecha/Hora: " + this.Pubdate;
+
+            return msg;
         }
         #endregion
     }
