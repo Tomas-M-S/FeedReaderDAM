@@ -9,7 +9,8 @@ using CDatos.StorageData;
 namespace CDatos.DBEntities
 {
     /// <summary>
-    /// Clase ItemDB intermediaria con la tabla StoredEntries de la base de datos
+    /// Clase ItemDB intermediaria con la tabla StoredEntries de la base de datos.
+    /// Representa un Item concreto guardado en la base de datos.
     /// </summary>
     /// <author>Tomás Martínez Sempere</author>
     /// <date>26/04/2015</date>
@@ -32,10 +33,6 @@ namespace CDatos.DBEntities
         // *****************
         // * CONSTRUCTORES *
         // *****************
-        // public ItemDB()
-        // public ItemDB(ItemDB itemcopy)
-        // public ItemDB(DateTime fecha, int idOrigin, string content)
-        // public ItemDB(int id, bool active, DateTime fecha, int idOrigin, string content)
         #region "Constructores"
         
         /// <summary>
@@ -101,15 +98,6 @@ namespace CDatos.DBEntities
         // *******************
         // * ACCESOS A LA BD *
         // *******************
-        // public static int saveItem(ItemDB itemtosave)
-        // public static int updateItem(ItemDB itemtoupdate)
-        // public static int deleteItem(int id)
-        // public static DataTable retrieveItem(int id)
-        // public static DataTable retrieveItemByOrigin(int id)
-        // public static DataTable retrieneAllItems()
-        // public static ItemDB retrieveObjectItemDB(int id)
-        // public static List<ItemDB> retrieveListAllItem()
-        // public static List<ItemDB> retrieveListItemsById(int idorigin)
         #region "CRUD from database"
 
         /// <summary>
@@ -365,8 +353,6 @@ namespace CDatos.DBEntities
         // *****************
         // * OTROS MÉTODOS *
         // *****************
-        // public ItemDB Clone(ItemDB itemtoclone)
-        // public override string ToString()
         #region "Other methods"
 
         public ItemDB Clone(ItemDB itemtoclone)

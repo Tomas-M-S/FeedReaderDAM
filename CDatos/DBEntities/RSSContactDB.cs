@@ -8,7 +8,8 @@ using CDatos.StorageData;
 namespace CDatos.DBEntities
 {
     /// <summary>
-    /// Clase RSSContactDB intermediaria con la tabla RssContact de la base de datos
+    /// Clase RSSContactDB intermediaria con la tabla RssContact de la base de datos.
+    /// Representa un feed concreto guardado en la base de datos.
     /// </summary>
     /// <author>Tomás Martínez Sempere</author>
     /// <date>26/04/2015</date>

@@ -80,12 +80,6 @@
     <Compile Include="ItemsDialog.Designer.cs">
       <DependentUpon>ItemsDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="ItemView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ItemView.Designer.cs">
-      <DependentUpon>ItemView.cs</DependentUpon>
-    </Compile>
     <Compile Include="ModifyFeedDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -126,9 +120,6 @@
     <EmbeddedResource Include="ItemsDialog.resx">
       <DependentUpon>ItemsDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ItemView.resx">
-      <DependentUpon>ItemView.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ModifyFeedDialog.resx">
       <DependentUpon>ModifyFeedDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -146,6 +137,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ClassDiagram.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

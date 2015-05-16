@@ -56,7 +56,8 @@ namespace CVista
                 this.textBox2.Text = this.savedate;
                 this.textBox3.Text = this.url;
                 this.textBox4.Text = this.comment;
-                this.comboBox1.SelectedText = this.type;
+                int index = this.comboBox1.FindString(this.type);
+                this.comboBox1.SelectedIndex = index;
                 this.textBox5.Text = this.title;
             }
             else
@@ -85,27 +86,41 @@ namespace CVista
             {
                 // Modifica
                 int id = Convert.ToInt32(this.textBox1.Text);
-                if (Utils.updateRssContact(id, true, dateu, url, comm, type, title) == 1)
+                try
                 {
-                    MessageBox.Show("Feed modificado correctamente", "Modificar Feed", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
-                    this.Close();
+                    if (Utils.updateRssContact(id, true, dateu, url, comm, type, title) == 1)
+                    {
+                        MessageBox.Show("Feed modificado correctamente", "Modificar Feed", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se pudo modificar el Feed", "Modificar Feed", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("No se pudo modificar el Feed", "Modificar Feed", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                    MessageBox.Show("El campo URL es obligatorio. " + Environment.NewLine + ex.Message);
                 }
             }
             else
             {
                 // Guarda
-                if (Utils.saveRssContact(dateu, url, comm, type, title) == 1)
+                try
                 {
-                    MessageBox.Show("Feed guardado correctamente", "Guardar Feed", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
-                    this.Close();
+                    if (Utils.saveRssContact(dateu, url, comm, type, title) == 1)
+                    {
+                        MessageBox.Show("Feed guardado correctamente", "Guardar Feed", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se pudo guardar el Feed", "Guardar Feed", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("No se pudo guardar el Feed", "Guardar Feed", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                    MessageBox.Show("El campo URL es obligatorio. " + Environment.NewLine + ex.Message);
                 }
             }
         }

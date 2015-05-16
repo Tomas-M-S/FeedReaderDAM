@@ -45,6 +45,7 @@
     <Compile Include="Classes\LinkRss.cs" />
     <Compile Include="Classes\PersonRss.cs" />
     <Compile Include="Classes\RssFeed.cs" />
+    <Compile Include="Utils\Constants.cs" />
     <Compile Include="Utils\Utils.cs" />
     <Compile Include="WBManager\CheckUpdatedThread.cs" />
     <Compile Include="WBManager\UpdatedEventArgs.cs" />
@@ -57,7 +58,9 @@
       <Name>CDatos</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

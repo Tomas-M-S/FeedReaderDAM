@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.ServiceModel.Syndication;
 using System.Data;
 using CDatos.DBEntities;
@@ -12,28 +11,20 @@ using CNegocio.Classes;
 namespace CNegocio.Utils
 {
     /// <summary>
-    /// Clase con diversas constantes usadas en el programa
-    /// </summary>
-    public class Constants
-    {
-        public static int MODIFY_FEED = 0;
-        public static int CREATE_FEED = 1;
-
-        public static int FEED_UPDATED = 1;
-        public static int FEED_NO_CHANGES = 0;
-        public static int FEED_OFFLINE = -1;
-
-        public static string MSG_F_UPDATED = "Feed actualizado";
-        public static string MSG_F_NO_CHANGES = "Feed sin cambios";
-        public static string MSG_F_OFFLINE = "No se pudo contactar con el feed";
-    }
-
-    /// <summary>
-    /// 
+    /// Esta clase almacena métodos estáticos destinados a servir como puente entre
+    /// las entidades de la caba CDatos y la capa CVista.
     /// </summary>
     public class Utils
     {
         #region "Access DB service ItemDB"
+
+        /// <summary>
+        /// Inserta un Item en la base de datos.
+        /// </summary>
+        /// <param name="itemToSave">(Item) Objeto con los datos del Item</param>
+        /// <param name="dtnow">(DateTime) Fecha de hoy</param>
+        /// <param name="ido">(int) Id del feed de donde hemos obtenido el item</param>
+        /// <returns>(int) Resultado de la operación (0 o 1)</returns>
         public static int saveItem(Item itemToSave, DateTime dtnow, int ido)
         {
             ItemDB itmdb = new ItemDB();
@@ -43,6 +34,14 @@ namespace CNegocio.Utils
             return ItemDB.saveItem(itmdb);
         }
 
+        /// <summary>
+        /// Actualiza un Item en la base de datos.
+        /// </summary>
+        /// <param name="itemToUpdate">(Item) Objeto con los datos del Item</param>
+        /// <param name="id">(int) Id del Item en la base de datos</param>
+        /// <param name="dtnow">(DateTime) Fecha de hoy</param>
+        /// <param name="ido">(int) Id del feed de donde hemos obtenido el item</param>
+        /// <returns>(int) Resultado de la operación (0 o 1)</returns>
         public static int updateItem(Item itemToUpdate, int id, DateTime dtnow, int ido)
         {
             ItemDB itmdb = new ItemDB();
@@ -52,11 +51,30 @@ namespace CNegocio.Utils
             return ItemDB.saveItem(itmdb);
         }
 
+        /// <summary>
+        /// Borra un Item de la base de datos.
+        /// </summary>
+        /// <param name="id">(int) Id del Item en la base de datos</param>
+        /// <returns>(int) Resultado de la operación (0 o 1)</returns>
         public static int deleteItem(int id)
         {
-            return Utils.deleteItem(id);
+            return ItemDB.deleteItem(id);
         }
 
+        /// <summary>
+        /// Recupera todos los Items activos en la base de datos.
+        /// </summary>
+        /// <returns>(DataTable) Resultado de la query</returns>
+        public static DataTable retrieveAllItems()
+        {
+            return ItemDB.retrieneAllItems();
+        }
+
+        /// <summary>
+        /// Recupera todos los items de un feed dato (se pasa por parámetro si Id).
+        /// </summary>
+        /// <param name="idfeed">(int) Id del feed para realizar la consulta</param>
+        /// <returns>(DataTable) Resultado de la query</returns>
         public static DataTable retrieveItems(int idfeed)
         {
             return ItemDB.retrieveItemByOrigin(idfeed);
@@ -64,6 +82,16 @@ namespace CNegocio.Utils
         #endregion
 
         #region "Access DB service RSSContactDB"
+
+        /// <summary>
+        /// Guarda un feed en la base de datos.
+        /// </summary>
+        /// <param name="fecha">(DateTime) Fecha de hoy</param>
+        /// <param name="url">(string) Dirección del feed</param>
+        /// <param name="comm">(string)Comentario al feed</param>
+        /// <param name="type">(string) Tipo de feed</param>
+        /// <param name="title">(string) Título del feed</param>
+        /// <returns>(int) con el resultado de la inserción (1 o 0)</returns>
         public static int saveRssContact(DateTime fecha, string url, string comm, string type, string title)
         {
             RSSContactDB newRss = new RSSContactDB();
@@ -76,6 +104,17 @@ namespace CNegocio.Utils
             return RSSContactDB.saveRss(newRss);
         }
 
+        /// <summary>
+        /// Actualiza el estado de un feed.
+        /// </summary>
+        /// <param name="id">(int) Id del feed que queremos actualizar</param>
+        /// <param name="active">(bool) Feed activo/inactivo (borrado)</param>
+        /// <param name="fecha">(DateTime) Fecha de hoy</param>
+        /// <param name="url">(string) Dirección del feed</param>
+        /// <param name="comm">(string)Comentario al feed</param>
+        /// <param name="type">(string) Tipo de feed</param>
+        /// <param name="title">(string) Título del feed</param>
+        /// <returns>(int) con el resultado de la inserción (1 o 0)</returns>
         public static int updateRssContact(int id, bool active, DateTime fecha, string url, string comm, string type, string title)
         {
             RSSContactDB newRss = new RSSContactDB();
@@ -90,16 +129,34 @@ namespace CNegocio.Utils
             return RSSContactDB.updateRss(newRss);
         }
 
+        /// <summary>
+        /// Borra un feed.
+        /// </summary>
+        /// <param name="id">(int) Identificador del feed que queremos borrar</param>
+        /// <returns>(int) Resultado de la operación (1 o 0)</returns>
         public static int deleteRssContact(int id)
         {
             return RSSContactDB.deleteRss(id);
         }
 
+        /// <summary>
+        /// Recupera todos los feeds activos almacenados en la BD.
+        /// </summary>
+        /// <returns>(DateTable) Con el resultado de la query</returns>
         public static DataTable retrieveRssContact()
         {
             return RSSContactDB.retrieveAllRss();
         }
 
+        #endregion
+
+        #region "Others methods"
+
+        /// <summary>
+        /// Conecta con una dirección feed, optiene una lectura de un archivo XML, lo parsea y crea un objeto RssFeed
+        /// </summary>
+        /// <param name="uri">(string) Dirección del feed</param>
+        /// <returns>(RssFeed) Objeto con la información del feed</returns>
         public static RssFeed retrieveRssFeedContact(string uri)
         {
             DataWeb dw = new DataWeb(uri);
@@ -107,10 +164,13 @@ namespace CNegocio.Utils
             return contact;
         }
 
+        /// <summary>
+        /// Este método se usa para cargar el combobox de la ventana ItemsDialog
+        /// </summary>
+        /// <returns>(List<string>) Lista con la información de los items</returns>
         public static List<string> retrieveFeedsWithItems()
         {
             List<string> list = new List<string>();
-
             foreach (RSSContactDB item in RSSContactDB.retrieveListRssWithItems())
             {
                 string itemmsg = "";
@@ -120,6 +180,7 @@ namespace CNegocio.Utils
 
             return list;
         }
+
         #endregion
     }
 }

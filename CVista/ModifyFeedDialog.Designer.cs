@@ -116,6 +116,7 @@
             // 
             // textBox3
             // 
+            this.textBox3.BackColor = System.Drawing.SystemColors.Info;
             this.textBox3.Location = new System.Drawing.Point(95, 69);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(269, 20);

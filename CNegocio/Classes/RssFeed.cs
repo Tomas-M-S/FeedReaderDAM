@@ -7,6 +7,10 @@ using System.ServiceModel.Syndication;
 
 namespace CNegocio.Classes
 {
+    /// <summary>
+    /// Clase-entidad construida a partir de un objeto SyndicationFeed.
+    /// Representa una lectura RSS de un Feed. RSS o Atom.
+    /// </summary>
     public class RssFeed
     {
         // Datos obligatorios del feed según el estándar RSS 2.0
@@ -22,7 +26,11 @@ namespace CNegocio.Classes
         public List<CategoryRss> Categories { set; get; }
         public List<Item> Items { set; get; }
 
+        // *****************
+        // * CONSTRUCTORES *
+        // *****************
         #region "Constructores"
+
         /// <summary>
         /// Constructor vacío
         /// </summary>
@@ -72,6 +80,7 @@ namespace CNegocio.Classes
             this.Categories =       CategoryRss.NewListCategories(rss.Categories.ToList());
             this.Items =            Item.NewListItems(rss.Items.ToList());
         }
+
         #endregion
     }
 }

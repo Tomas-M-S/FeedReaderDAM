@@ -8,6 +8,10 @@ using System.ServiceModel.Syndication;
 
 namespace CNegocio.Classes
 {
+    /// <summary>
+    /// Clase-entidad construida a partir de un objeto SyndicationItem
+    /// Representa un Item
+    /// </summary>
     public class Item
     {
         // Todos los elementos de un Item son opcionales
@@ -20,7 +24,11 @@ namespace CNegocio.Classes
         public string Guid { set; get; }
         public SyndicationItem SyndItem { set; get; }
 
+        // *****************
+        // * CONSTRUCTORES *
+        // *****************
         #region "Constructores"
+
         /// <summary>
         /// Constructor vacío
         /// </summary>
@@ -67,18 +75,23 @@ namespace CNegocio.Classes
             this.Guid =         itm.Id != null ? itm.Id : String.Empty;
             this.SyndItem =     itm.Clone();
         }
+
         #endregion
 
+        // *****************
+        // * OTROS MÉTODOS *
+        // *****************
         #region "Otros métodos"
+
         /// <summary>
-        /// 
+        /// Método estático. Transforma un List<SyndicationItem> en List<Item>.
         /// </summary>
-        /// <param name="sItem"></param>
-        /// <returns>(List<Item>)</returns>
-        public static List<Item> NewListItems(List<SyndicationItem> sItem)
+        /// <param name="copytolist">(List<SyndicationItem>) List pasado como parámetro</param>
+        /// <returns>(List<Item>) List resultante</returns>
+        public static List<Item> NewListItems(List<SyndicationItem> copytolist)
         {
             List<Item> listItems = new List<Item>();
-            foreach (SyndicationItem itm in sItem)
+            foreach (SyndicationItem itm in copytolist)
             {
                 listItems.Add(new Item(itm));
             }
@@ -87,9 +100,9 @@ namespace CNegocio.Classes
         }
 
         /// <summary>
-        /// 
+        /// Obtiene información relevante del objeto.
         /// </summary>
-        /// <returns>(string)</returns>
+        /// <returns>(string) Cadena que representa al objeto</returns>
         public override string ToString()
         {
             string msg = "";
@@ -118,6 +131,7 @@ namespace CNegocio.Classes
 
             return msg;
         }
+
         #endregion
     }
 }

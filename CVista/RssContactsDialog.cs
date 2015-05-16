@@ -78,6 +78,7 @@ namespace CVista
                 this.button4.Enabled = false;
                 this.label4.Text = "Edición desactivada";
                 this.label4.ForeColor = Color.Red;
+                this.putAlldotGrey();
 
                 this.dataConect = new WebServiciesManager(Properties.Settings.Default.intervalo);
                 foreach (CheckUpdatedThread item in this.dataConect.listwork)
@@ -96,6 +97,7 @@ namespace CVista
                 this.button4.Enabled = true;
                 this.label4.Text = "Edición activada";
                 this.label4.ForeColor = Color.Green;
+                this.putAlldotGrey();
 
                 if (dataConect != null)
                 {
@@ -126,13 +128,14 @@ namespace CVista
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            this.rowIndex = e.RowIndex;
+            this.rowIndex = (e.RowIndex < 0)? 0 : e.RowIndex;
             int idfeed = (int)this.dataGridView1.Rows[this.rowIndex].Cells[1].Value;
             string urifeed = (string)this.dataGridView1.Rows[this.rowIndex].Cells[4].Value;
             string titulofeed = (string)this.dataGridView1.Rows[this.rowIndex].Cells[2].Value;
 
             ItemsDialog id = new ItemsDialog(titulofeed, urifeed, idfeed);
             id.MdiParent = WrapWindow.ActiveForm;
+            this.putDotGrey(this.rowIndex);
             id.Show();
         }
 
@@ -154,15 +157,17 @@ namespace CVista
 
         private void eliminarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!this.dataGridView1.Rows[this.rowIndex].IsNewRow)
+            if (!this.dataGridView2.Rows[this.rowIndex].IsNewRow)
             {
-                int id = (int)this.dataGridView1.Rows[this.rowIndex].Cells[0].Value;
+                int id = (int)this.dataGridView2.Rows[this.rowIndex].Cells[0].Value;
 
                 if (MessageBox.Show("¿Estas seguro de que desea eliminar este Feed?", "Eliminar Feed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
                     if (Utils.deleteRssContact(id) == 1)
                     {
                         MessageBox.Show("Feed eliminado", "Eliminar", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
+                        this.cargarTabla2();
+                        this.cargarTabla1();
                     }
                     else
                     {
@@ -174,9 +179,9 @@ namespace CVista
 
         private void modificarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!this.dataGridView1.Rows[this.rowIndex].IsNewRow)
+            if (!this.dataGridView2.Rows[this.rowIndex].IsNewRow)
             {
-                //this.dataGridView1.Rows.RemoveAt(this.rowIndex);
+                //this.dataGridView2.Rows.RemoveAt(this.rowIndex);
                 int id = (int)this.dataGridView2.Rows[this.rowIndex].Cells[0].Value;
                 string savedate = ((DateTime)this.dataGridView2.Rows[this.rowIndex].Cells[1].Value).ToString("d");
                 string url = (string)this.dataGridView2.Rows[this.rowIndex].Cells[2].Value;
@@ -193,6 +198,7 @@ namespace CVista
         {
             DataTable dtfeeds = new DataTable();
             dtfeeds = Utils.retrieveRssContact();
+            this.dataGridView1.Columns.Clear();
 
             // Definimos las columnas
 
@@ -261,9 +267,9 @@ namespace CVista
 
         protected void cargarTabla2()
         {
+            this.dataGridView2.Columns.Clear();
             this.dataGridView2.DataSource = Utils.retrieveRssContact();
         }
-
 
         public void event_updatedFeed(object sender, UpdatedEventArgs e)
         {
@@ -296,6 +302,31 @@ namespace CVista
                         cellstatus.Value = e.status;
                     }
                 }
+            }
+        }
+
+        public void putAlldotGrey()
+        {
+            foreach (DataGridViewRow itemRow in this.dataGridView1.Rows)
+            {
+                DataGridViewImageCell cell = (DataGridViewImageCell)this.dataGridView1.Rows[itemRow.Index].Cells[0];
+                DataGridViewTextBoxCell cellstatus = (DataGridViewTextBoxCell)this.dataGridView1.Rows[itemRow.Index].Cells[6];
+
+                cell.Style.BackColor = Color.LightGray;
+                cell.ToolTipText = Constants.MSG_F_NO_CHANGES;
+                cellstatus.Value = 0;
+            }
+        }
+
+        public void putDotGrey(int row)
+        {
+            DataGridViewImageCell cell = (DataGridViewImageCell)this.dataGridView1.Rows[row].Cells[0];
+            DataGridViewTextBoxCell cellstatus = (DataGridViewTextBoxCell)this.dataGridView1.Rows[row].Cells[6];
+            if ((int)cellstatus.Value == 1)
+            {
+                cell.Style.BackColor = Color.LightGray;
+                cell.ToolTipText = Constants.MSG_F_NO_CHANGES;
+                cellstatus.Value = 0;
             }
         }
     }
