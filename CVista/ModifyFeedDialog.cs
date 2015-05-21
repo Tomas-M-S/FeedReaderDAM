@@ -21,8 +21,10 @@ namespace CVista
         public string comment;
         public string type;
         public string title;
+        public RssContactsDialog parent;
 
         public ModifyFeedDialog(
+                RssContactsDialog parent,
                 int flag,
                 int idfeed = -1,
                 string savedate = "",
@@ -31,6 +33,7 @@ namespace CVista
                 string type = "",
                 string title = "")
         {
+            this.parent = parent;
             this.flag = flag;
             this.idfeed = idfeed;
             this.savedate = savedate;
@@ -91,6 +94,8 @@ namespace CVista
                     if (Utils.updateRssContact(id, true, dateu, url, comm, type, title) == 1)
                     {
                         MessageBox.Show("Feed modificado correctamente", "Modificar Feed", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                        this.parent.cargarTabla1();
+                        this.parent.cargarTabla2();
                         this.Close();
                     }
                     else
@@ -111,6 +116,8 @@ namespace CVista
                     if (Utils.saveRssContact(dateu, url, comm, type, title) == 1)
                     {
                         MessageBox.Show("Feed guardado correctamente", "Guardar Feed", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                        this.parent.cargarTabla1();
+                        this.parent.cargarTabla2();
                         this.Close();
                     }
                     else

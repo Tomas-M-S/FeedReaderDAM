@@ -64,7 +64,18 @@ namespace CNegocio.WBManager
             foreach (CheckUpdatedThread item in listwork)
             {
                 item.StopThread();
+                //Console.WriteLine("Hilo detenido");
             }
+            /*
+            foreach (Thread item in listthread)
+            {
+                if (item.IsAlive)
+                {
+                    item.Abort();
+                    Console.WriteLine("Hilo detenido2");
+                }
+            }
+             */
             //Console.WriteLine("Disconnected");
         }
     }

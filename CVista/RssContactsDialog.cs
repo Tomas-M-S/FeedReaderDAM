@@ -54,6 +54,7 @@ namespace CVista
 
         private void RssContactsDialog_Leave(object sender, EventArgs e)
         {
+            // Nothing to do
         }
 
         private void RssContactsDialog_Load(object sender, EventArgs e)
@@ -65,8 +66,6 @@ namespace CVista
 
         private void button1_Click(object sender, EventArgs e)
         {
-            WebServiciesManager dataConect = null;
-
             String textboton = button1.Text;
             if (textboton.Equals("ACTIVAR"))
             {
@@ -82,9 +81,9 @@ namespace CVista
 
                 this.dataConect = new WebServiciesManager(Properties.Settings.Default.intervalo);
                 foreach (CheckUpdatedThread item in this.dataConect.listwork)
-	            {
+                {
                     item.updatedFeed += event_updatedFeed;
-	            }
+                }
                 this.dataConect.LanzarHilos();
             }
             else
@@ -99,7 +98,7 @@ namespace CVista
                 this.label4.ForeColor = Color.Green;
                 this.putAlldotGrey();
 
-                if (dataConect != null)
+                if (this.dataConect != null)
                 {
                     this.dataConect.DetenerHilos();
                 }
@@ -117,7 +116,7 @@ namespace CVista
 
         private void button4_Click(object sender, EventArgs e)
         {
-            ModifyFeedDialog mfDialog = new ModifyFeedDialog(Constants.CREATE_FEED);
+            ModifyFeedDialog mfDialog = new ModifyFeedDialog(this, Constants.CREATE_FEED);
             mfDialog.MdiParent = WrapWindow.ActiveForm;
             mfDialog.Show();
         }
@@ -130,13 +129,22 @@ namespace CVista
         {
             this.rowIndex = (e.RowIndex < 0)? 0 : e.RowIndex;
             int idfeed = (int)this.dataGridView1.Rows[this.rowIndex].Cells[1].Value;
+            int status = (int)this.dataGridView1.Rows[this.rowIndex].Cells[6].Value;
             string urifeed = (string)this.dataGridView1.Rows[this.rowIndex].Cells[4].Value;
             string titulofeed = (string)this.dataGridView1.Rows[this.rowIndex].Cells[2].Value;
 
-            ItemsDialog id = new ItemsDialog(titulofeed, urifeed, idfeed);
-            id.MdiParent = WrapWindow.ActiveForm;
-            this.putDotGrey(this.rowIndex);
-            id.Show();
+            if (status != -1)
+            {
+                ItemsDialog id = new ItemsDialog(titulofeed, urifeed, idfeed);
+                id.MdiParent = WrapWindow.ActiveForm;
+                this.putDotGrey(this.rowIndex);
+                id.Show();
+            }
+            else
+            {
+                String msg = "El feed está fuera de línea o la URL es erronea";
+                MessageBox.Show(msg);
+            }
         }
 
         private void dataGridView2_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -188,13 +196,13 @@ namespace CVista
                 string comm = (string)this.dataGridView2.Rows[this.rowIndex].Cells[3].Value;
                 string type = (string)this.dataGridView2.Rows[this.rowIndex].Cells[4].Value;
                 string title = (string)this.dataGridView2.Rows[this.rowIndex].Cells[5].Value;
-                ModifyFeedDialog mfDialog = new ModifyFeedDialog(Constants.MODIFY_FEED, id, savedate, url, comm, type, title);
+                ModifyFeedDialog mfDialog = new ModifyFeedDialog(this, Constants.MODIFY_FEED, id, savedate, url, comm, type, title);
                 mfDialog.MdiParent = WrapWindow.ActiveForm;
                 mfDialog.Show();
             }
         }
 
-        protected void cargarTabla1()
+        public void cargarTabla1()
         {
             DataTable dtfeeds = new DataTable();
             dtfeeds = Utils.retrieveRssContact();
@@ -265,7 +273,7 @@ namespace CVista
             }
         }
 
-        protected void cargarTabla2()
+        public void cargarTabla2()
         {
             this.dataGridView2.Columns.Clear();
             this.dataGridView2.DataSource = Utils.retrieveRssContact();

@@ -34,7 +34,6 @@
             this.administraFeedsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.administraItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.programaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ayudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.creditosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.salirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,34 +71,26 @@
             // administraFeedsToolStripMenuItem
             // 
             this.administraFeedsToolStripMenuItem.Name = "administraFeedsToolStripMenuItem";
-            this.administraFeedsToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
-            this.administraFeedsToolStripMenuItem.Text = "Administra Feeds";
+            this.administraFeedsToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+            this.administraFeedsToolStripMenuItem.Text = "Administrar Feeds";
             this.administraFeedsToolStripMenuItem.Click += new System.EventHandler(this.administraFeedsToolStripMenuItem_Click);
             // 
             // administraItemsToolStripMenuItem
             // 
             this.administraItemsToolStripMenuItem.Name = "administraItemsToolStripMenuItem";
-            this.administraItemsToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
-            this.administraItemsToolStripMenuItem.Text = "Administra Items guardados";
+            this.administraItemsToolStripMenuItem.Size = new System.Drawing.Size(227, 22);
+            this.administraItemsToolStripMenuItem.Text = "Administrar Items guardados";
             this.administraItemsToolStripMenuItem.Click += new System.EventHandler(this.administraItemsToolStripMenuItem_Click);
             // 
             // programaToolStripMenuItem
             // 
             this.programaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ayudaToolStripMenuItem,
             this.creditosToolStripMenuItem,
             this.toolStripSeparator1,
             this.salirToolStripMenuItem});
             this.programaToolStripMenuItem.Name = "programaToolStripMenuItem";
             this.programaToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.programaToolStripMenuItem.Text = "Programa";
-            // 
-            // ayudaToolStripMenuItem
-            // 
-            this.ayudaToolStripMenuItem.Name = "ayudaToolStripMenuItem";
-            this.ayudaToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.ayudaToolStripMenuItem.Text = "Ayuda";
-            this.ayudaToolStripMenuItem.Click += new System.EventHandler(this.ayudaToolStripMenuItem_Click);
             // 
             // creditosToolStripMenuItem
             // 
@@ -147,7 +138,6 @@
         private System.Windows.Forms.ToolStripMenuItem administraFeedsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem administraItemsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem programaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ayudaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem creditosToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem salirToolStripMenuItem;

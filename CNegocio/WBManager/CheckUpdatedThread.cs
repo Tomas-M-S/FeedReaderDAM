@@ -101,7 +101,7 @@ namespace CNegocio.WBManager
         /// </summary>
         /// <param name="state">(int) Código con el estado del feed (0: Sin cambios, 1: Actualizado, -1: Sin conexión).</param>
         /// <param name="msg">(string) Mensaje comentando el estado (se muestra en el tooltip del dataGridView).</param>
-        public void raiseEvent(int state, string msg)
+        protected void raiseEvent(int state, string msg)
         {
             UpdatedEventArgs args = new UpdatedEventArgs();
             args.status = state;
@@ -122,7 +122,7 @@ namespace CNegocio.WBManager
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">(UpdatedEventArgs) Clase portadora de la información del evento</param>
         protected virtual void OnUpdateFeedReached(UpdatedEventArgs e)
         {
             EventHandler<UpdatedEventArgs> handler = updatedFeed;

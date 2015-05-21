@@ -30,11 +30,7 @@ namespace CDatos.DBEntities
         // ******************
         // * CONSTRUCTORES: *
         // ******************
-        // public RSSContactDB()
-        // public RSSContactDB(RSSContactDB RSStocopy)
-        // public RSSContactDB(DateTime fecha, string url, string comm, string type, string title)
-        // public RSSContactDB(int id, bool active, DateTime fecha, string url, string comm, string type, string title)
-        #region "Constructores"
+         #region "Constructores"
 
         /// <summary>
         /// Constructor vacío
@@ -111,14 +107,6 @@ namespace CDatos.DBEntities
         // ********************
         // * ACCESOS A LA BD: *
         // ********************
-        // public static int saveRss(RSSContactDB rsstosave)
-        // public static int updateRss(RSSContactDB rsstoupdate)
-        // public static int deleteRss(int id)
-        // public static DataTable retrieveRss(int id)
-        // public static DataTable retrieveAllRss()
-        // public static RSSContactDB retrieveObjectRssDB(int id)
-        // public static List<RSSContactDB> retrieveListAllRss()
-        // public static List<RSSContactDB> retrieveListRssWithItems()
         #region "CRUD from database"
 
         /// <summary>
@@ -370,8 +358,6 @@ namespace CDatos.DBEntities
         // ******************
         // * OTROS MÉTODOS: *
         // ******************
-        // public static RSSContactDB Clone(RSSContactDB RSStoclone)
-        // public override string ToString()
         #region "Other methods"
 
         /// <summary>
