@@ -5,3 +5,5 @@ Se puede descargar aquí: https://www.microsoft.com/es-es/download/details.aspx?
 
 Si no tienes instalado el Access serán necesarios los drivers del Access 2007.
 Se puede descargar aquí: (para PCs de 64bits) aqui: https://www.microsoft.com/es-es/download/details.aspx?id=23734
+
+Fdo. Tomás Martínez Sempere
