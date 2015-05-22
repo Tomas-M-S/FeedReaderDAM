@@ -25,11 +25,9 @@ namespace CDatos.StorageData
         {
             //C:\Users\Tomas\Desktop\Martinez_Tomas_FeedReader\FeedReader\CDatos\bin\Debug\StorageData
             //strConnection = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=|DataDirectory|\StorageData\DBRss.accdb";
-            //string path = System.IO.Directory.GetCurrentDirectory();
-            //string path2 = Environment.CurrentDirectory;
-            //Console.WriteLine(path2);
-            strConnection = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\Tomas\Desktop\Martinez_Tomas_FeedReader\FeedReader\CDatos\bin\Debug\StorageData\DBRss.accdb";
-            //strConnection = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=.\StorageData\DBRss.accdb";
+            //strConnection = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\Tomas\Desktop\Martinez_Tomas_FeedReader\FeedReader\CDatos\bin\Debug\StorageData\DBRss.accdb";
+
+            strConnection = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=./StorageData/DBRss.accdb";
             this.ConnectionWithDB = null;
             this.Lector = null;
             this.Orden = null;
